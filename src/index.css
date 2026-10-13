@@ -1,0 +1,252 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --color-brand-50: #eef4ff;
+  --color-brand-100: #dbe6ff;
+  --color-brand-200: #bed2ff;
+  --color-brand-300: #92b4ff;
+  --color-brand-400: #5e8bff;
+  --color-brand-500: #3763f6;
+  --color-brand-600: #2051e7;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+  --color-brand-950: #172554;
+
+  --color-ink-50: #f6f7f9;
+  --color-ink-100: #eceef2;
+  --color-ink-200: #d5d9e2;
+  --color-ink-400: #8892a6;
+  --color-ink-500: #626d82;
+  --color-ink-600: #4a5468;
+  --color-ink-700: #384154;
+  --color-ink-800: #232b3c;
+  --color-ink-900: #111827;
+  --color-ink-950: #0a0f1c;
+
+  --color-surface: #f4f6fb;
+
+  --shadow-card: 0 1px 2px rgb(15 23 42 / 0.04), 0 12px 32px -18px rgb(15 23 42 / 0.18);
+  --shadow-float: 0 2px 6px rgb(15 23 42 / 0.05), 0 28px 60px -28px rgb(15 23 42 / 0.35);
+  --shadow-glow: 0 20px 70px -24px rgb(29 78 216 / 0.55);
+
+  --animate-float-y: float-y 6s ease-in-out infinite;
+  --animate-fade-up: fade-up 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
+
+  @keyframes float-y {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white font-sans text-ink-900 antialiased;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand-600;
+  }
+
+  ::selection {
+    @apply bg-brand-600 text-white;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-3 text-[11px] font-bold tracking-[0.18em] uppercase;
+  }
+
+  .eyebrow::before {
+    content: '';
+    width: 1.75rem;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+    opacity: 0.45;
+  }
+
+  .btn-primary,
+  .btn-light,
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-bold transition duration-200 disabled:cursor-not-allowed disabled:opacity-60;
+  }
+
+  .btn-primary {
+    @apply bg-brand-700 text-white shadow-[0_12px_26px_-12px_rgba(29,78,216,0.85)] hover:-translate-y-0.5 hover:bg-brand-800 hover:shadow-[0_18px_36px_-14px_rgba(29,78,216,0.9)] active:translate-y-0 active:scale-[0.98];
+  }
+
+  .btn-light {
+    @apply bg-white text-brand-800 shadow-[0_10px_24px_-14px_rgba(15,23,42,0.5)] hover:-translate-y-0.5 hover:bg-brand-50 active:translate-y-0 active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply border border-ink-200 bg-white text-ink-800 hover:-translate-y-0.5 hover:border-brand-300 hover:bg-brand-50/60 active:translate-y-0 active:scale-[0.98];
+  }
+
+  .card {
+    @apply rounded-3xl border border-ink-200/80 bg-white shadow-card;
+  }
+
+  .card-hover {
+    @apply transition duration-200 hover:-translate-y-1 hover:border-brand-200 hover:shadow-float;
+  }
+
+  .tile {
+    @apply inline-flex items-center justify-center rounded-2xl bg-brand-50 text-brand-700;
+  }
+
+  .field-label {
+    @apply mb-1.5 block text-sm font-semibold text-ink-800;
+  }
+
+  .field-input {
+    @apply w-full rounded-xl border border-ink-200 bg-white px-4 py-3 text-sm text-ink-900 transition placeholder:text-ink-400 focus:border-brand-500 focus:outline-none focus:ring-4 focus:ring-brand-100;
+  }
+
+  .field-input[data-invalid='true'] {
+    @apply border-red-400 focus:border-red-500 focus:ring-red-100;
+  }
+
+  /* Panel admin — kontrol gaya shadcn: radius kecil, teks 14px, tanpa glow. */
+  .adm-card {
+    @apply rounded-lg border border-ink-200 bg-white;
+  }
+
+  .adm-input {
+    @apply w-full rounded-md border border-ink-200 bg-white px-3 py-2 text-sm text-ink-900 transition placeholder:text-ink-400 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none;
+  }
+
+  .adm-input[data-invalid='true'] {
+    @apply border-red-400 focus:border-red-500 focus:ring-red-100;
+  }
+
+  .adm-btn-primary {
+    @apply inline-flex h-9 items-center justify-center gap-2 rounded-md bg-brand-700 px-4 text-sm font-medium text-white transition hover:bg-brand-800 active:translate-y-px;
+  }
+
+  .adm-btn-outline {
+    @apply inline-flex h-9 items-center justify-center gap-2 rounded-md border border-ink-200 bg-white px-3.5 text-sm font-medium text-ink-800 transition hover:border-brand-300 hover:text-brand-700;
+  }
+
+  .adm-select {
+    @apply h-9 rounded-md border border-ink-200 bg-white pl-3 pr-8 text-sm font-medium text-ink-800 transition appearance-none bg-no-repeat hover:border-brand-300 focus:border-brand-500 focus:ring-2 focus:ring-brand-100 focus:outline-none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238892a6' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    background-position: right 0.6rem center;
+  }
+
+  /* Scroll reveal: aktif hanya kalau html.js-reveal diset runtime.
+     Tanpa JS (atau SSR) konten tetap terlihat. */
+  .reveal {
+    transition:
+      opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .js-reveal .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  .js-reveal .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js-reveal .reveal {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  /* Akordeon: expand halus memakai grid-template-rows */
+  .acc-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .acc-panel[data-open='true'] {
+    grid-template-rows: 1fr;
+  }
+
+  .acc-panel > * {
+    min-height: 0;
+    overflow: hidden;
+    visibility: hidden;
+    transition: visibility 0s linear 0.3s;
+  }
+
+  .acc-panel[data-open='true'] > * {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .acc-panel,
+    .acc-panel > * {
+      transition: none;
+    }
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  .grad-num {
+    background-image: linear-gradient(180deg, #bed2ff, #92b4ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
